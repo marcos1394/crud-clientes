@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!--
+    MAPEO HIBERNATE DE LA ENTIDAD CLIENTE
+    Incluye la relacion many-to-one con Estado.
+-->
+<hibernate-mapping package="com.prueba.crud.model">
+
+    <class name="Cliente" table="cliente">
+
+        <id name="clienteId" column="cliente_id" type="java.lang.Long">
+            <generator class="identity"/>
+        </id>
+
+        <property name="nombre"
+                  column="nombre"
+                  type="java.lang.String"
+                  not-null="true"
+                  length="100"/>
+
+        <property name="apPaterno"
+                  column="ap_pat"
+                  type="java.lang.String"
+                  not-null="true"
+                  length="100"/>
+
+        <property name="apMaterno"
+                  column="ap_mat"
+                  type="java.lang.String"
+                  length="100"/>
+
+        <property name="fechaAlta"
+                  column="fecha_alta"
+                  type="java.time.LocalDate"/>
+
+        <property name="fechaNacimiento"
+                  column="fecha_nacimiento"
+                  type="java.time.LocalDate"/>
+
+        <property name="status"
+                  column="status"
+                  type="java.lang.Integer"/>
+
+        <!--
+            RELACION MANY-TO-ONE con Estado.
+            fetch="join" significa que cuando cargues un Cliente,
+            Hibernate trae el Estado en la misma query con JOIN.
+            Esto evita el problema N+1.
+        -->
+        <many-to-one name="estado"
+                     class="Estado"
+                     column="estado_id"
+                     fetch="join"
+                     not-null="false"/>
+
+    </class>
+
+</hibernate-mapping>

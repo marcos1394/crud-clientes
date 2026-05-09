@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!--
+    MAPEO HIBERNATE DE LA ENTIDAD ESTADO
+    Aqui definimos como se mapea la clase Java Estado
+    a la tabla 'estado' en la base de datos.
+    La clase Java NO tiene ninguna anotacion JPA.
+-->
+<hibernate-mapping package="com.prueba.crud.model">
+
+    <class name="Estado" table="estado">
+
+        <id name="estadoId" column="estado_id" type="java.lang.Long">
+            <generator class="identity"/>
+        </id>
+
+        <property name="nombre"
+                  column="nombre"
+                  type="java.lang.String"
+                  not-null="true"
+                  length="100"/>
+
+        <!--
+            Un Estado tiene muchos Clientes.
+            inverse="true" porque Cliente es dueno de la relacion
+            (Cliente tiene la FK estado_id en su tabla).
+            lazy="true" para no cargar los clientes a menos que se pidan.
+        -->
+        <bag name="clientes" inverse="true" lazy="true" cascade="all">
+            <key column="estado_id"/>
+            <one-to-many class="Cliente"/>
+        </bag>
+
+    </class>
+
+</hibernate-mapping>
