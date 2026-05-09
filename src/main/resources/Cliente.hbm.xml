@@ -54,6 +54,7 @@
                      class="Estado"
                      column="estado_id"
                      fetch="join"
+                     lazy="false"
                      not-null="false"/>
 
     </class>
